@@ -259,7 +259,7 @@ const EXISTING_USERS = [
   
         } else {
   
-          message.textContent 
+          message.textContent =
             "✕ Incorrect verification code";
   
           message.className =
@@ -345,15 +345,46 @@ const EXISTING_USERS = [
   
   function renderDashboard() {
   
-    document.getElementById("screen-container").innerHTML = `
-      ${renderProgress(3)}
-  
-      <h2>Dashboard</h2>
+    document.querySelector(".container").innerHTML = `
+      <div class="dashboard-layout">
 
-     <p>
-      Welcome,
-      ${state.fullName || state.email}
+  <div class="sidebar">
+
+    <h2>BudgetBasket</h2>
+
+     <ul>
+  <li class="active">📊 Dashboard</li>
+
+  <li id="transactionsTab"> 💳 Transactions</li>
+
+  <li id="insightsTab">📈 Insights</li>
+
+  <li id="rewardsTab"> 🎁 Rewards</li>
+
+  <li id="setttingsTab">⚙️ Settings</li>
+
+  <li id="logoutBtn"> 🚪 Logout</li>
+</ul>
+
+</div>
+
+  <main class="dashboard-main">
+
+    <h1>Dashboard</h1>
+
+    <p class="welcome-text">
+      Welcome, ${state.fullName || state.email}
     </p>
+
+    <div class="welcome-banner">
+
+  <h2>You stayed within budget this week 🎉</h2>
+
+  <p>
+    You earned +120 grocery points this month.
+  </p>
+
+</div>
 
     <div class="stats-grid">
 
@@ -376,44 +407,119 @@ const EXISTING_USERS = [
         <h4>Reward Points</h4>
         <h3>1,240</h3>
       </div>
-
-    </div>
-
-    <div class="budget-section">
-
-      <h3>Monthly Budget Usage</h3>
-
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
       </div>
 
-      <p>$2,093 spent of $2,400 budget</p>
+      <div class="budget-health">
+
+       <h3>Budget Health</h3>
+
+      <div class="progress-bar">
+       <div class="progress-fill"></div>
+     </div>
+
+    <p>$2,093 of $2,400 spent this month</p>
 
     </div>
 
     <div class="categories">
 
-      <h3>Top Categories</h3>
+    <h3>Top Categories</h3>
 
-      <div class="category-item">
-        <span>🍔 Food</span>
-        <span>$520</span>
-      </div>
+    <div class="category-item">
+     <span>🍔 Food</span>
+     <span>$520</span>
+    </div>
 
-      <div class="category-item">
-        <span>🚗 Transport</span>
-        <span>$310</span>
-      </div>
+    <div class="category-item">
+     <span>🚗 Transport</span>
+     <span>$310</span>
+   </div>
 
-      <div class="category-item">
-        <span>🎬 Entertainment</span>
-        <span>$240</span>
-      </div>
+    <div class="category-item">
+     <span>🎬 Entertainment</span>
+     <span>$240</span>
+    </div>
+    </div>
+
+     <div class="transactions">
+
+    <h3>Recent Transactions</h3>
+
+    <div class="transaction-item">
+     <span>🍔 McDonald's</span>
+     <span class="expense">-$25</span>
+    </div>
+
+    <div class="transaction-item">
+     <span>⛽ Shell</span>
+     <span class="expense">-$45</span>
+    </div>
+
+    <div class="transaction-item">
+     <span>💰 Salary</span>
+     <span class="income">+$1,200</span>
+    </div>
+
+    </div>
+    </main>
 
     </div>
   `;
-} 
 
-     
+  console.log(document.getElementById("logoutBtn"));
+
+  document
+  .getElementById("logoutBtn")
+  .addEventListener("click", () => {
+
+  console.log("Logout clicked");
+
+    state.email = "";
+    state.fullName = "";
+
+    document.querySelector(".container").innerHTML = `
+    <div class="auth-card">
+      <div id="screen-container"></div>
+    </div>
+  
+    <div id="message"></div>
+  `;
   
   renderEmailScreen();
+
+//   });
+//   document
+//   .getElementById("transactionsTab")
+//   .addEventListener("click", () => {
+
+//     alert("Transactions page coming soon");
+
+//   });
+
+// document
+//   .getElementById("insightsTab")
+//   .addEventListener("click", () => {
+
+//     alert("Insights page coming soon");
+
+//   });
+
+// document
+//   .getElementById("rewardsTab")
+//   .addEventListener("click", () => {
+
+//     alert("Rewards page coming soon");
+
+
+// document
+//   .getElementById("settingsTab")
+//   .addEventListener("click", () => {
+
+//     alert("Settings page coming soon");
+
+  });
+} // 
+
+renderEmailScreen();
+
+
