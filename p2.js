@@ -1,3 +1,5 @@
+const DEMO_MODE = true; // true = stop after onboarding | false = show full dashboard
+
 // Global Application Configurations & Seed Data
 const GENERATED_OTP = "123456";
 const EXISTING_USERS = [
@@ -103,15 +105,15 @@ function renderOtpScreen() {
       <p class="footer-text">By continuing, you agree to our Terms and Privacy Policy.</p>
     </div>
   `;
- 
+
   document.getElementById("backBtn").addEventListener("click", () => renderEmailScreen());
- 
+
   const otpInputs = document.querySelectorAll(".otp-input");
   const verifyBtn = document.getElementById("verifyBtn");
   const otpMessage = document.getElementById("otpMessage");
   const countdownEl = document.getElementById("countdown");
   const resendText = document.getElementById("resendText");
- 
+
   let seconds = 30;
   const timer = setInterval(() => {
     seconds--;
@@ -122,9 +124,9 @@ function renderOtpScreen() {
       document.getElementById("resendLink").addEventListener("click", () => renderOtpScreen());
     }
   }, 1000);
- 
+
   otpInputs[0].focus();
- 
+
   otpInputs.forEach((input, index) => {
     input.addEventListener("input", () => {
       input.value = input.value.replace(/[^0-9]/g, "");
@@ -137,7 +139,7 @@ function renderOtpScreen() {
       if (e.key === "Backspace" && !input.value && index > 0) otpInputs[index - 1].focus();
     });
   });
- 
+
   verifyBtn.addEventListener("click", () => {
     verifyBtn.textContent = "Verifying...";
     verifyBtn.disabled = true;
@@ -148,8 +150,27 @@ function renderOtpScreen() {
         otpMessage.innerHTML = `<p class="otp-success">✓ Code verified successfully</p>`;
         const existing = localStorage.getItem(state.email);
         setTimeout(() => {
-          if (existing) { state.fullName = existing; renderDashboard(); }
-          else renderOnboardingScreen();
+          if (existing) {
+            state.fullName = existing;
+            if (DEMO_MODE) {
+              document.querySelector(".container").innerHTML = `
+                <div class="auth-page">
+                  <div class="auth-logo">
+                    <div class="logo-icon">✦</div>
+                    <span>BudgetBasket</span>
+                  </div>
+                  <div class="auth-card" style="text-align:center;">
+                    <h2>Welcome back, ${existing}! 🎉</h2>
+                    <p class="auth-subtitle">Dashboard launching soon. Stay tuned!</p>
+                  </div>
+                </div>
+              `;
+            } else {
+              renderDashboard();
+            }
+          } else {
+            renderOnboardingScreen();
+          }
         }, 800);
       } else {
         otpMessage.innerHTML = `<p class="otp-error">✕ Incorrect verification code</p>`;
@@ -161,6 +182,7 @@ function renderOtpScreen() {
     }, 1000);
   });
 }
+
  
 // ==========================================================================
 // 3. ONBOARDING SCREEN
@@ -195,10 +217,27 @@ function renderOnboardingScreen() {
     }
     state.fullName = name;
     localStorage.setItem(state.email, name);
-    renderDashboard();
+  
+    if (DEMO_MODE) {
+      document.querySelector(".container").innerHTML = `
+        <div class="auth-page">
+          <div class="auth-logo">
+            <div class="logo-icon">✦</div>
+            <span>BudgetBasket</span>
+          </div>
+          <div class="auth-card" style="text-align:center;">
+            <h2>You're all set, ${name}! 🎉</h2>
+            <p class="auth-subtitle">Dashboard launching soon. Stay tuned!</p>
+          </div>
+        </div>
+      `;
+    } else {
+      renderDashboard();
+    }
   });
 }
- 
+
+
 // ==========================================================================
 // 4. DASHBOARD SHELL
 // ==========================================================================
