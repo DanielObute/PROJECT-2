@@ -35,7 +35,13 @@ function renderEmailScreen() {
           <input type="email" id="email" placeholder="iii@gmail.com" autocomplete="off" />
           <span class="input-check" id="emailCheck">✓</span>
         </div>
-        <button id="continueBtn" class="primary-btn" disabled>Continue ✉</button>
+        <button id="continueBtn" class="primary-btn" disabled>
+         Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+           <rect x="2" y="4" width="20" height="16" rx="2"/>
+           <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+         </svg>
+       </button>
         <p class="helper-text">No password needed. We'll email you a one-time code.</p>
       </div>
       <p class="footer-text">By continuing, you agree to our Terms and Privacy Policy.</p>
